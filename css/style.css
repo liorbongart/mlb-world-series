@@ -1,0 +1,336 @@
+:root {
+  --bg: #0f1420;
+  --bg-alt: #161d2e;
+  --panel: #1b2436;
+  --border: #2a3552;
+  --text: #eef1f8;
+  --text-dim: #9aa5bd;
+  --accent: #e0973a;
+  --accent-dim: #7a5324;
+  --win: #4caf78;
+  --link: #6fa8ff;
+  --shadow: rgba(0,0,0,0.45);
+  --radius: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f3ee;
+    --bg-alt: #ffffff;
+    --panel: #ffffff;
+    --border: #dcd6c8;
+    --text: #1c1c1c;
+    --text-dim: #6b6558;
+    --accent: #b5651d;
+    --accent-dim: #f0dcc0;
+    --win: #1f7a4d;
+    --link: #1d5fb0;
+    --shadow: rgba(0,0,0,0.12);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.site-header {
+  background: linear-gradient(135deg, var(--bg-alt), var(--bg));
+  border-bottom: 1px solid var(--border);
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+}
+
+.header-inner h1 {
+  margin: 0 0 0.4rem;
+  font-size: 2.1rem;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 1rem;
+}
+
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0.9rem 1.5rem;
+}
+
+.controls-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+#searchInput {
+  flex: 1 1 220px;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+#searchInput:focus {
+  border-color: var(--accent);
+}
+
+.era-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.era-chip {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text-dim);
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.era-chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.era-chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.decade-section {
+  margin-bottom: 2.5rem;
+}
+
+.decade-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-dim);
+}
+
+.decade-heading h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--accent);
+}
+
+.decade-heading .decade-count {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+.year-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.85rem;
+}
+
+.year-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.95rem 1.05rem;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+  transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  font: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.year-card:hover, .year-card:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px var(--shadow);
+  border-color: var(--accent);
+  outline: none;
+}
+
+.year-card.no-series {
+  opacity: 0.65;
+  font-style: italic;
+}
+
+.year-card .card-year {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.year-card .card-winner {
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+
+.year-card .card-meta {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-dim);
+  margin-top: 3rem;
+  font-size: 1.05rem;
+}
+
+/* Detail overlay */
+.detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3vh 1rem;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.detail-overlay[hidden] { display: none; }
+
+.detail-panel {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  max-width: 640px;
+  width: 100%;
+  padding: 1.75rem;
+  position: relative;
+  box-shadow: 0 20px 60px var(--shadow);
+}
+
+.detail-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.9rem;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+.detail-close:hover { color: var(--text); }
+
+.detail-year {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 0 0.25rem;
+}
+
+.detail-title {
+  margin: 0 0 0.15rem;
+  font-size: 1.5rem;
+}
+
+.detail-sub {
+  color: var(--text-dim);
+  margin: 0 0 1.1rem;
+  font-size: 0.95rem;
+}
+
+.detail-mvp {
+  display: inline-block;
+  background: var(--accent-dim);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.2rem;
+}
+
+.detail-note {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.games-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.games-table th {
+  text-align: left;
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.games-table td {
+  padding: 0.55rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.games-table tr:last-child td { border-bottom: none; }
+
+.game-winner-name {
+  font-weight: 600;
+}
+
+.game-winner-name.is-champ { color: var(--win); }
+
+.game-score {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.game-note {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.site-footer {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  padding: 2rem 1rem 3rem;
+  border-top: 1px solid var(--border);
+}
